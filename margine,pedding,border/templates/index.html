@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>✨ Sentiment Analyzer</h1>
+            <p>Analyze the sentiment of your text instantly!</p>
+        </header>
+
+        <main>
+            <div class="input-section">
+                <textarea 
+                    id="textInput" 
+                    placeholder="Enter your text here..."
+                    rows="5"
+                ></textarea>
+                <button id="analyzeBtn" onclick="analyzeSentiment()">
+                    <span class="button-text">Analyze</span>
+                    <div class="loading-spinner"></div>
+                </button>
+            </div>
+
+            <div class="result-section" id="resultSection">
+                <div class="result-card">
+                    <div class="sentiment-emoji" id="sentimentEmoji"></div>
+                    <div class="sentiment-text" id="sentimentText"></div>
+                    <div class="polarity-container">
+                        <div class="polarity-label">Polarity Score:</div>
+                        <div class="polarity-score" id="polarityScore"></div>
+                    </div>
+                    <div class="polarity-bar-container">
+                        <div class="polarity-bar">
+                            <div class="polarity-indicator" id="polarityIndicator"></div>
+                        </div>
+                        <div class="polarity-labels">
+                            <span>-1</span>
+                            <span>0</span>
+                            <span>1</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div class="history-section">
+            <h2>Analysis History</h2>
+            <div id="historyContainer"></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

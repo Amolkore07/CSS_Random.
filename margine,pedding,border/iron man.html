@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Light/Dark Mode Example</title>
+    
+    <style>
+        /* 1. Define variables for Light Mode (the default) */
+        :root {
+          --bg-color: #FFFFFF;
+          --text-color: #222222;
+          --border-color: #EAEAEA;
+          --accent-color: #007BFF; /* Royal Blue example */
+          --accent-glow: none; /* Changed from #007BFF to 'none' for no glow in light mode */
+        }
+
+        /* 2. Define NEW values for Dark Mode */
+        .dark-mode {
+          --bg-color: #121212;
+          --text-color: #E0E0E0;
+          --border-color: #333333;
+          --accent-color: #00CFFF; /* Neon/Glowing Teal example */
+          --accent-glow: 0px 0px 8px #00CFFF; /* Glow effect */
+        }
+
+        /* 3. Use the variables everywhere */
+        body {
+          background-color: var(--bg-color);
+          color: var(--text-color);
+          transition: background-color 0.3s ease, color 0.3s ease;
+          /* Added for better appearance */
+          font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          padding: 2rem;
+        }
+        
+        /* Added button styling that uses the variables */
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            background-color: var(--accent-color);
+            color: var(--bg-color); /* Using bg-color for button text */
+            border: none;
+            text-shadow: var(--accent-glow);
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .title {
+          color: var(--accent-color);
+          text-shadow: var(--accent-glow); /* Glow will only apply in dark mode */
+          transition: color 0.3s ease, text-shadow 0.3s ease; /* Added transition */
+        }
+
+        .text-area {
+          border: 2px solid var(--border-color);
+          background-color: var(--bg-color);
+          color: var(--text-color); /* Explicitly set text color for <textarea> */
+          transition: border-color 0.3s ease, background-color 0.3s ease; /* Added transition */
+          
+          /* Added for better appearance */
+          padding: 10px;
+          margin-top: 15px;
+          border-radius: 5px;
+          width: 90%;
+          min-height: 100px;
+        }
+        
+        /* Ensure <textarea> elements inherit font */
+        textarea.text-area {
+            font-family: inherit;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <button id="theme-toggle">Toggle Theme</button>
+
+    <h1 class="title">This is the Title</h1>
+    
+    <div class="text-area">
+        This is a <strong>&lt;div&gt;</strong> element styled with the <code>.text-area</code> class. It inherits the body's text color.
+    </div>
+    
+    <textarea class="text-area" placeholder="This is a <textarea> element, also styled with .text-area."></textarea>
+
+    <script>
+        const toggleButton = document.getElementById('theme-toggle');
+        
+        toggleButton.addEventListener('click', () => {
+            // This line adds/removes the "dark-mode" class from the <body> tag
+            document.body.classList.toggle('dark-mode');
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clean Air Initiative</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #74b9ff, #0dbc79);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 3px solid #00b894;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 15px 35px rgba(0, 184, 148, 0.3);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 184, 148, 0.4);
+        }
+        
+        .header {
+            color: #00b894;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .content {
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            color: white;
+            padding: 30px;
+            margin: 20px 0;
+            border-radius: 15px;
+            border: 2px dashed rgba(255, 255, 255, 0.6);
+            font-size: 16px;
+            line-height: 1.6;
+            box-shadow: 0 8px 20px rgba(0, 184, 148, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .content::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .content-text {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .button {
+            background: linear-gradient(135deg, #fdcb6e, #e17055);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(253, 203, 110, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(253, 203, 110, 0.6);
+            background: linear-gradient(135deg, #e17055, #fdcb6e);
+        }
+        
+        .button:active {
+            transform: translateY(0);
+        }
+        
+        .button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s, height 0.4s;
+        }
+        
+        .button:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .close:hover {
+            color: #e17055;
+        }
+        
+        .modal h2 {
+            color: #00b894;
+            margin-bottom: 20px;
+        }
+        
+        .modal p {
+            color: #2d3436;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        .tips {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #00b894;
+            margin-top: 20px;
+        }
+        
+        .tips h3 {
+            color: #00b894;
+            margin-bottom: 10px;
+        }
+        
+        .tips ul {
+            color: #2d3436;
+            padding-left: 20px;
+        }
+        
+        .tips li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        
+        /* Light/Dark Mode Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+        }
+        
+        .bulb-container {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .bulb-container:hover {
+            transform: scale(1.1);
+        }
+        
+        .bulb {
+            width: 40px;
+            height: 50px;
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: relative;
+            margin: 5px auto;
+            transition: all 0.5s ease;
+            box-shadow: 0 0 20px rgba(253, 203, 110, 0.5);
+            animation: pulse 2s infinite;
+        }
+        
+        .bulb.dark {
+            background: linear-gradient(135deg, #636e72, #2d3436);
+            box-shadow: 0 0 5px rgba(45, 52, 54, 0.3);
+        }
+        
+        .bulb::before {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 8px;
+            background: #ddd;
+            bottom: -8px;
+            left: 5px;
+            border-radius: 0 0 10px 10px;
+        }
+        
+        .bulb::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent);
+            top: 8px;
+            left: 10px;
+            border-radius: 50%;
+            opacity: 0.7;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(253, 203, 110, 0.5);
+            }
+            50% { 
+                transform: scale(1.05);
+                box-shadow: 0 0 30px rgba(253, 203, 110, 0.8);
+            }
+        }
+        
+        /* Light rays animation */
+        .rays {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            opacity: 0.7;
+        }
+        
+        .ray {
+            position: absolute;
+            width: 3px;
+            height: 15px;
+            background: linear-gradient(to bottom, #ffeaa7, transparent);
+            border-radius: 2px;
+            transform-origin: center bottom;
+            animation: rotateRays 4s linear infinite;
+        }
+        
+        .ray:nth-child(1) { transform: rotate(0deg) translateY(-35px); }
+        .ray:nth-child(2) { transform: rotate(45deg) translateY(-35px); }
+        .ray:nth-child(3) { transform: rotate(90deg) translateY(-35px); }
+        .ray:nth-child(4) { transform: rotate(135deg) translateY(-35px); }
+        .ray:nth-child(5) { transform: rotate(180deg) translateY(-35px); }
+        .ray:nth-child(6) { transform: rotate(225deg) translateY(-35px); }
+        .ray:nth-child(7) { transform: rotate(270deg) translateY(-35px); }
+        .ray:nth-child(8) { transform: rotate(315deg) translateY(-35px); }
+        
+        @keyframes rotateRays {
+            0% { transform: rotate(var(--rotation, 0deg)) translateY(-35px) scale(1); }
+            50% { transform: rotate(var(--rotation, 0deg)) translateY(-35px) scale(1.2); }
+            100% { transform: rotate(var(--rotation, 0deg)) translateY(-35px) scale(1); }
+        }
+        
+        .dark-theme {
+            background: linear-gradient(135deg, #2d3436, #636e72);
+        }
+        
+        .dark-theme .container {
+            background: rgba(45, 52, 54, 0.95);
+            border-color: #74b9ff;
+            color: white;
+        }
+        
+        .dark-theme .header {
+            color: #74b9ff;
+        }
+        
+        .dark-theme .content {
+            background: linear-gradient(135deg, #636e72, #2d3436);
+        }
+        
+        .dark-theme .modal-content {
+            background-color: #2d3436;
+            color: white;
+        }
+        
+        .dark-theme .modal h2 {
+            color: #74b9ff;
+        }
+        
+        .dark-theme .tips {
+            background: #636e72;
+            border-left-color: #74b9ff;
+        }
+        
+        .dark-theme .tips h3 {
+            color: #74b9ff;
+        }
+        
+        /* Enhanced animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-10px) rotate(1deg); }
+            66% { transform: translateY(5px) rotate(-1deg); }
+        }
+        
+        @keyframes glow {
+            0%, 100% { 
+                box-shadow: 0 15px 35px rgba(0, 184, 148, 0.3),
+                           0 0 50px rgba(0, 184, 148, 0.1);
+            }
+            50% { 
+                box-shadow: 0 20px 40px rgba(0, 184, 148, 0.4),
+                           0 0 80px rgba(0, 184, 148, 0.2);
+            }
+        }
+        
+        @keyframes textGlow {
+            0%, 100% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); }
+            50% { text-shadow: 2px 2px 8px rgba(0, 184, 148, 0.3); }
+        }
+        
+        .container {
+            animation: float 6s ease-in-out infinite, glow 4s ease-in-out infinite;
+        }
+        
+        .header {
+            animation: textGlow 3s ease-in-out infinite;
+        }
+        
+        /* Particle background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(116, 185, 255, 0.6);
+            border-radius: 50%;
+            animation: floatParticle 15s linear infinite;
+        }
+        
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Button ripple effect */
+        .button {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: rippleEffect 0.6s linear;
+            pointer-events: none;
+        }
+        
+        @keyframes rippleEffect {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Light/Dark Theme Toggle -->
+    <div class="theme-toggle">
+        <div class="bulb-container" onclick="toggleTheme()">
+            <div class="rays" id="rays">
+                <div class="ray" style="--rotation: 0deg;"></div>
+                <div class="ray" style="--rotation: 45deg;"></div>
+                <div class="ray" style="--rotation: 90deg;"></div>
+                <div class="ray" style="--rotation: 135deg;"></div>
+                <div class="ray" style="--rotation: 180deg;"></div>
+                <div class="ray" style="--rotation: 225deg;"></div>
+                <div class="ray" style="--rotation: 270deg;"></div>
+                <div class="ray" style="--rotation: 315deg;"></div>
+            </div>
+            <div class="bulb" id="bulb"></div>
+        </div>
+    </div>
+    
+    <!-- Floating Particles Background -->
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <div class="icon">🌱</div>
+        <div class="header">Know Your Oxygen, Live With It</div>
+        <div class="content">
+            <div class="content-text">
+                The world should be free from pollution. Know your own impact and take action for cleaner air. Fresh air means a happy life!
+            </div>
+        </div>
+        <button class="button" onclick="openModal(); createRipple(event)">Learn More</button>
+    </div>
+    
+    <!-- Modal -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>🌍 Clean Air for a Better Tomorrow</h2>
+            <p>Air pollution is one of the world's largest health and environmental problems. Poor air quality affects billions of people around the world and is responsible for millions of deaths each year.</p>
+            
+            <p>But there's hope! Every small action counts toward creating cleaner air for everyone. When we understand our impact on air quality, we can make better choices that benefit both our health and the environment.</p>
+            
+            <div class="tips">
+                <h3>💡 Simple Ways You Can Help:</h3>
+                <ul>
+                    <li>Choose walking, cycling, or public transport over driving</li>
+                    <li>Use energy-efficient appliances and LED lighting</li>
+                    <li>Plant trees and support green spaces in your community</li>
+                    <li>Reduce, reuse, and recycle to minimize waste</li>
+                    <li>Support renewable energy sources</li>
+                    <li>Avoid burning waste or leaves</li>
+                    <li>Choose eco-friendly products and packaging</li>
+                </ul>
+            </div>
+            
+            <p><strong>Remember:</strong> Clean air is not just an environmental issue—it's a health issue that affects every breath we take. Together, we can create a world where fresh air is abundant for all!</p>
+        </div>
+    </div>
+
+    <script>
+        let isDarkMode = false;
+
+        // Toggle between light and dark theme
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            const body = document.body;
+            const bulb = document.getElementById('bulb');
+            const rays = document.getElementById('rays');
+            
+            if (isDarkMode) {
+                body.classList.add('dark-theme');
+                bulb.classList.add('dark');
+                rays.style.display = 'none';
+            } else {
+                body.classList.remove('dark-theme');
+                bulb.classList.remove('dark');
+                rays.style.display = 'block';
+            }
+        }
+
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 20;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Create ripple effect on button click
+        function createRipple(event) {
+            const button = event.currentTarget;
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = event.clientX - rect.left - size / 2;
+            const y = event.clientY - rect.top - size / 2;
+            
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple';
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            
+            button.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        }
+
+        // Modal functions
+        function openModal() {
+            document.getElementById('infoModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('infoModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('infoModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Initialize particles when page loads
+        window.onload = function() {
+            createParticles();
+        }
+
+        // Add keyboard support for accessibility
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
