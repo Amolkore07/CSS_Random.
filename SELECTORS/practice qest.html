@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    /* Basic page setup for centering the card */
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: #f0f2f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    /* Main Card Container */
+    .card {
+        background-color: #ffffff;
+        width: 320px;
+        padding: 16px;
+        border-radius: 12px;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Image Styling */
+    .card-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
+    /* Tags Container and Capsule Shape */
+    .tags {
+        margin-top: 16px;
+        display: flex;
+        gap: 8px;
+    }
+
+    .tag {
+        border: 1px solid #e5e7eb;
+        color: #6b7280;
+        font-size: 12px;
+        padding: 4px 12px;
+        border-radius: 50px;
+        /* Capsule shape */
+    }
+
+    /* Typography */
+    .card-title {
+        margin: 16px 0 8px 0;
+        font-size: 22px;
+        color: #1f2937;
+        font-weight: 600;
+    }
+
+    .card-text {
+        margin: 0 0 24px 0;
+        font-size: 14px;
+        color: #6b7280;
+        line-height: 1.5;
+    }
+
+    /* Button Container & Capsule Button */
+    .button-container {
+        text-align: center;
+        margin-bottom: 8px;
+    }
+
+    .read-more-btn {
+        display: inline-block;
+        background-color: #eff6ff;
+        /* Light blue background */
+        color: #3b82f6;
+        /* Blue text */
+        padding: 10px 24px;
+        border-radius: 50px;
+        /* Capsule shape */
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        transition: background-color 0.2s;
+    }
+
+    .read-more-btn:hover {
+        background-color: #dbeafe;
+    }
+</style>
+
+<body>
+    <div class="card">
+        <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=800" alt="Lake with boats"
+            class="card-image">
+
+        <div class="tags">
+            <span class="tag">Nature</span>
+            <span class="tag">Lake</span>
+        </div>
+
+        <h2 class="card-title">Lago di Braies</h2>
+        <p class="card-text">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consectetur sodales morbi dignissim sed diam
+            pharetra vitae ipsum odio.
+        </p>
+
+        <div class="button-container">
+            <a href="#" class="read-more-btn">Read More</a>
+        </div>
+    </div>
+</body>
+
+</html>
